@@ -1,0 +1,1011 @@
+import tkinter
+from tkinter import messagebox
+import mysql.connector
+from tkinter import *
+
+from tabulate import tabulate
+
+mydb=mysql.connector.connect(host="localhost",user="root",passwd="1234",database="ART_GALLERIA")
+#if mydb:
+#    print("Successful")
+#else:
+#   print("Unsuccessful")
+mycursor=mydb.cursor()
+window=tkinter.Tk()
+window.title("World of Art Galleria")
+window.geometry('500x200')
+
+
+#background_label = Label(top, image=filename)
+window.configure(bg="deeppink4")
+l1=tkinter.Label(window,text="WORLD OF ART GALLERIA",font=("arial bold",50),fg="snow",bg="deeppink4").grid(row=0,column=4,padx=350)
+
+def input_art():
+    window1=tkinter.Tk()
+    window1.title("ART")
+    window1.configure(bg="deeppink4")
+    lst=[]
+    var1=tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3= tkinter.StringVar()
+    var4 = tkinter.StringVar()
+
+    def reg():
+        art_id=ent1.get()
+        lst.append(art_id)
+        artist_id=ent2.get()
+        lst.append(artist_id)
+        type=ent3.get()
+        lst.append(type)
+        art_price=ent4.get()
+        lst.append(art_price)
+        sql1 = "INSERT INTO ART(ART_ID,ARTIST_ID,ART_TYPE,ART_PRICE) VALUES(%s,%s,%s,%s)"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("INSERION","Inserted the record in ART successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+
+
+    lab1=tkinter.Label(window1,text="ART_ID",font=("arial bold",20)).grid(row=2,column=6,padx=250,pady=10)
+    ent1=tkinter.Entry(window1,textvariable=var1)
+    ent1.grid(row=2,column=7,pady=10)
+
+    lab2 = tkinter.Label(window1, text="ARTIST_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1,textvariable=var2)
+    ent2.grid(row=3, column=7,  pady=10)
+
+    lab3 = tkinter.Label(window1, text="TYPE", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1,textvariable=var3)
+    ent3.grid(row=4, column=7,  pady=10)
+
+    lab4 = tkinter.Label(window1, text="ART_PRICE", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1,textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    b1=tkinter.Button(window1,text="SUBMIT",font=("arial bold",30),command=reg).grid(row=7,column=6,padx=260,pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=7, column=7,
+                                                                                                     
+                                                                                                     pady=10)
+
+
+def input_artist():
+    window1 = tkinter.Tk()
+    window1.title("ARTIST")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+    var6 = tkinter.StringVar()
+
+    def reg():
+        artist_id = ent1.get()
+        lst.append(artist_id)
+        artist_name = ent2.get()
+        lst.append(artist_name)
+        address = ent3.get()
+        lst.append(address)
+        artist_phone = ent4.get()
+        lst.append(artist_phone)
+        artist_email=ent4.get()
+        lst.append(artist_email)
+        dob=ent6.get()
+        lst.append(dob)
+        sql2 = "INSERT INTO ARTIST VALUES(%s,%s,%s,%s,%s,%s)"
+        mycursor.execute(sql2, lst)
+        mydb.commit()
+        messagebox.showinfo("INSERION", "Inserted the record in ARTIST successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+        var6.set("")
+
+    lab1 = tkinter.Label(window1, text="ARTIST_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, padx=200, pady=10)
+
+    lab2 = tkinter.Label(window1, text="ARTIST_NAME", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, padx=200, pady=10)
+
+    lab3 = tkinter.Label(window1, text="ADDRESS", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, padx=200, pady=10)
+
+    lab4 = tkinter.Label(window1, text="ARTIST_PHONE", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, padx=200, pady=10)
+
+    lab5 = tkinter.Label(window1, text="ARTIST_EMAIL", font=("arial bold", 20)).grid(row=6, column=6, padx=250, pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, padx=200, pady=10)
+
+    lab6 = tkinter.Label(window1, text="DOB", font=("arial bold", 20)).grid(row=7, column=6, padx=250, pady=10)
+    ent6 = tkinter.Entry(window1, textvariable=var6)
+    ent6.grid(row=7, column=7, padx=200, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=350,
+                                                                                           pady=10)
+
+    b2= tkinter.Button(window1,text="BACK",font=("arial bold",30),command=window1.destroy).grid(row=8,column=7,padx=500,
+                                                                                                 pady=10)
+
+
+
+def input_customer():
+
+    window1 = tkinter.Tk()
+    window1.title("ART")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+
+    def reg():
+        customer_id = ent1.get()
+        lst.append(customer_id)
+        customer_name = ent2.get()
+        lst.append(customer_name)
+        customer_phone = ent3.get()
+        lst.append(customer_phone)
+        customer_email = ent4.get()
+        lst.append(customer_email)
+        sql = "INSERT INTO CUSTOMER VALUES(%s,%s,%s,%s)"
+        mycursor.execute(sql, lst)
+        mydb.commit()
+
+        messagebox.showinfo("INSERION", "Inserted the record in CUSTOMER successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+
+    lab1 = tkinter.Label(window1, text="CUSTOMER_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, padx=260, pady=10)
+
+    lab2 = tkinter.Label(window1, text="CUSTOMER_NAME", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, padx=260, pady=10)
+
+    lab3 = tkinter.Label(window1, text="CUSTOMER_PHONE", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, padx=260, pady=10)
+
+    lab4 = tkinter.Label(window1, text="CUSTOMER_EMAIL", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, padx=260, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=7, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=7, column=7,
+                                                                                                     padx=500,
+                                                                                                     pady=10)
+
+
+def input_exhibition():
+
+    window1 = tkinter.Tk()
+    window1.title("EXHIBITION")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+
+
+    def reg():
+        location = ent1.get()
+        lst.append(location)
+        art_id = ent2.get()
+        lst.append(art_id)
+        customer_id = ent3.get()
+        lst.append(customer_id)
+        start_date = ent4.get()
+        lst.append(start_date)
+        end_date = ent4.get()
+        lst.append(end_date)
+        sql = "INSERT INTO EXHIBITION VALUES(%s,%s,%s,%s,%s)"
+        mycursor.execute(sql, lst)
+        mydb.commit()
+        messagebox.showinfo("INSERION", "Inserted the record in EXHIBITION successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+
+
+    lab1 = tkinter.Label(window1, text="LOCATION", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, padx=260, pady=10)
+
+    lab2 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, padx=260, pady=10)
+
+    lab3 = tkinter.Label(window1, text="CUSTOMER_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, padx=260, pady=10)
+
+    lab4 = tkinter.Label(window1, text="START_DATE", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, padx=260, pady=10)
+
+    lab5 = tkinter.Label(window1, text="END_DATE", font=("arial bold", 20)).grid(row=6, column=6, padx=250, pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, padx=260, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=350,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+                                                                                                     padx=500,
+                                                                                                     pady=10)
+
+
+def input_online():
+    window1 = tkinter.Tk()
+    window1.title("ONLINE")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+
+    def reg():
+        order_id = ent1.get()
+        lst.append(order_id)
+        customer_id = ent2.get()
+        lst.append(customer_id)
+        art_id = ent3.get()
+        lst.append(art_id)
+        order_date = ent4.get()
+        lst.append(order_date)
+        sql = "INSERT INTO ONLINE VALUES(%s,%s,%s,%s)"
+        mycursor.execute(sql, lst)
+        mydb.commit()
+
+        messagebox.showinfo("INSERION", "Inserted the record in ONLINE successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+
+    lab1 = tkinter.Label(window1, text="ORDER_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, padx=260, pady=10)
+
+    lab2 = tkinter.Label(window1, text="CUSTOMER_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                      pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, padx=260, pady=10)
+
+    lab3 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250,
+                                                                                       pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, padx=260, pady=10)
+
+    lab4 = tkinter.Label(window1, text="ORDER_DATE", font=("arial bold", 20)).grid(row=5, column=6, padx=250,
+                                                                                       pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, padx=260, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=7, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=7, column=7,
+                                                                                                     padx=500,
+                                                                                                     pady=10)
+
+
+def view_art():
+    window1=tkinter.Toplevel(window)
+    window1.title("ART")
+    window1.configure(bg="gray9")
+    l1=tkinter.Label(window1,text="ART",font=("ARIAL BOLD",40),bg="gray9",fg="coral").grid(row=0,column=4,padx=650)
+    sql="SELECT * FROM ART"
+    mycursor.execute(sql)
+    myresult=mycursor.fetchall()
+    l2 = tkinter.Label(window1, text=tabulate(myresult, headers=['ART_ID', 'ARTIST_ID','TYPE','ART_PRICE'], tablefmt='psql'), font=("ARIAl", 20),
+                       bg="gray9", fg="light coral").grid(row=2, column=4);
+
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=7, column=4)
+
+
+
+
+def view_artist():
+    window1 = tkinter.Toplevel(window)
+    window1.title("ARTist")
+    window1.configure(bg="gray9")
+    l1 = tkinter.Label(window1, text="ARTIST", font=("ARIAL BOLD", 40), bg="gray9", fg="coral").grid(row=0,column=4,padx=400,pady=10)
+    sql="SELECT *  FROM ARTIST"
+    mycursor.execute(sql)
+    myresult=mycursor.fetchall()
+    l2 = tkinter.Label(window1, text=tabulate(myresult, headers=['ARTI_ID', 'ARTI_NAME','ADDRESS','ARTI_PHONE','ARTI_EMAIL','DOB'], tablefmt='psql'),
+                       font=("ARIAl", 18), bg="gray9", fg="light coral").grid(row=2,column=4,padx=400,pady=10)
+
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=3, column=4,
+                                                                                                     padx=400,
+                                                                                                     pady=10)
+
+
+def view_customer():
+    window1 = tkinter.Toplevel(window)
+    window1.title("CUSTOMER")
+    window1.configure(bg="gray9")
+    l1 = tkinter.Label(window1, text="CUSTOMER", font=("ARIAL BOLD", 40), bg="gray9", fg="coral").grid(row=0,column=4,padx=400,pady=10)
+    sql="SELECT *  FROM CUSTOMER"
+    mycursor.execute(sql)
+    myresult=mycursor.fetchall()
+    l2 = tkinter.Label(window1, text=tabulate(myresult, headers=['CUST_ID','CUST_NAME','CUST_PHONE','CUST_EMAIL'], tablefmt='psql'),
+                       font=("ARIAl", 18), bg="gray9", fg="light coral").grid(row=2, column=4,padx=400,pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=3, column=4,
+                                                                                                     padx=400,
+                                                                                                     pady=10)
+
+
+def view_exhibition():
+    window1 = tkinter.Toplevel(window)
+    window1.title("EXHIBITION")
+    window1.configure(bg="gray9")
+    l1 = tkinter.Label(window1, text="EXHIBITION", font=("ARIAL BOLD", 40), bg="gray9", fg="coral").grid(row=0,column=4,padx=500)
+    sql="SELECT *  FROM EXHIBITION"
+    mycursor.execute(sql)
+    myresult=mycursor.fetchall()
+    l2 = tkinter.Label(window1, text=tabulate(myresult, headers=['LOCA', 'ART_ID','CUST_ID','START_DATE','END_DATE'], tablefmt='psql'),
+                       font=("ARIAl", 15), bg="gray9", fg="light coral").grid(row=2, column=4,padx=500,pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=3, column=4,
+                                                                                                     padx=500,
+                                                                                                     pady=10)
+
+
+
+
+def view_online():
+    window1 = tkinter.Toplevel(window)
+    window1.title("ONLINE")
+    window1.configure(bg="gray9")
+    l1 = tkinter.Label(window1, text="ONLINE", font=("ARIAL BOLD", 40), bg="gray9", fg="coral").grid(row=0,column=4,padx=600)
+
+    sql="SELECT *  FROM ONLINE"
+    mycursor.execute(sql)
+    myresult=mycursor.fetchall()
+    l2 = tkinter.Label(window1, text=tabulate(myresult, headers=['ORD_ID','CUST_ID','ART_ID','ORD_DATE'], tablefmt='psql'), font=("ARIAl", 15),
+                       bg="gray9", fg="light coral").grid(row=2, column=4,padx=500,pady=10);
+
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=4, column=4,
+                                                                                                     padx=500,
+                                                                                                     pady=10)
+
+
+
+def update_art():
+    window1 = tkinter.Tk()
+    window1.title("ART")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+
+    def reg():
+        old_art_id = ent1.get()
+        art_id=ent2.get()
+        lst.append(art_id)
+        artist_id = ent3.get()
+        lst.append(artist_id)
+        type = ent4.get()
+        lst.append(type)
+        art_price = ent5.get()
+        lst.append(art_price)
+        lst.append(old_art_id)
+        sql1 = "UPDATE ART SET ART_ID=%s, ARTIST_ID=%s,ART_TYPE=%s, ART_PRICE=%s WHERE  ART_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("UPDATION", "Updated the record in ART successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+
+    lab1 = tkinter.Label(window1, text="OLD_ART_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, pady=10)
+
+    lab2 = tkinter.Label(window1, text="NEW_ART_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+    lab3 = tkinter.Label(window1, text="ARTIST_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+    lab4 = tkinter.Label(window1, text="TYPE", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    lab5 = tkinter.Label(window1, text="ART_PRICE", font=("arial bold", 20)).grid(row=6, column=6, padx=250, pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+
+
+
+def update_artist():
+    window1 = tkinter.Tk()
+    window1.title("ARTIST")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+    var6 = tkinter.StringVar()
+    var7 = tkinter.StringVar()
+
+    def reg():
+        old_art_id = ent1.get()
+        artist_id = ent2.get()
+        lst.append(artist_id)
+        artist_name = ent3.get()
+        lst.append(artist_name)
+        address = ent4.get()
+        lst.append(address)
+        artist_phone = ent5.get()
+        lst.append(artist_phone)
+        artist_email = ent6.get()
+        lst.append(artist_email)
+        dob = ent7.get()
+        lst.append(dob)
+        lst.append(old_art_id)
+        sql1 = "UPDATE ARTIST SET ARTIST_ID=%s, ARTIST_NAME=%s,ADDRESS=%s, ARTIST_PHONE=%s, ARTIST_EMAIL=%s, DOB=%s WHERE  ARTIST_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("UPDATION", "Updated the record in ARTIST successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+        var6.set("")
+        var7.set("")
+
+    lab1 = tkinter.Label(window1, text="OLD_ARTIST_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, pady=10)
+
+    lab2 = tkinter.Label(window1, text="NEW_ARTIST_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+    lab3 = tkinter.Label(window1, text="ARTIST_NAME", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+    lab4 = tkinter.Label(window1, text="ADDRESS", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    lab5 = tkinter.Label(window1, text="ARTIST_PHONE", font=("arial bold", 20)).grid(row=6, column=6, padx=250, pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, pady=10)
+
+    lab6 = tkinter.Label(window1, text="ARTIST_EMAIL", font=("arial bold", 20)).grid(row=7, column=6, padx=250, pady=10)
+    ent6 = tkinter.Entry(window1, textvariable=var6)
+    ent6.grid(row=7, column=7, pady=10)
+
+    lab7 = tkinter.Label(window1, text="DOB", font=("arial bold", 20)).grid(row=8, column=6, padx=250, pady=10)
+    ent7 = tkinter.Entry(window1, textvariable=var7)
+    ent7.grid(row=8, column=7, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=10, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=10, column=7,
+
+                                                                                                     pady=10)
+
+def update_customer():
+    window1 = tkinter.Tk()
+    window1.title("CUSTOMER")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+
+    def reg():
+        old_customer_id = ent1.get()
+        customer_id = ent2.get()
+        lst.append(customer_id)
+        customer_name = ent3.get()
+        lst.append(customer_name)
+        customer_phone = ent4.get()
+        lst.append(customer_phone)
+        customer_email = ent5.get()
+        lst.append(customer_email)
+        lst.append(old_customer_id)
+        sql1 = "UPDATE CUSTOMER SET CUSTOMER_ID=%s, CUSTOMER_NAME=%s,CUSTOMER_PHONE=%s, CUSTOMER_EMAIL=%s WHERE  CUSTOMER_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("UPDATION", "Updated the record in CUSTOMER successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+
+    lab1 = tkinter.Label(window1, text="OLD_CUSTOMER_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250, pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, pady=10)
+
+    lab2 = tkinter.Label(window1, text="NEW_CUSTOMER_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+    lab3 = tkinter.Label(window1, text="CUSTOMER_NAME", font=("arial bold", 20)).grid(row=4, column=6, padx=250, pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+    lab4 = tkinter.Label(window1, text="CUSTOMER_PHONE", font=("arial bold", 20)).grid(row=5, column=6, padx=250, pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    lab5 = tkinter.Label(window1, text="CUSTOMER_EMAIL", font=("arial bold", 20)).grid(row=6, column=6, padx=250, pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+def update_exhibition():
+    window1 = tkinter.Tk()
+    window1.title("EXHIBITION")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+    var6 = tkinter.StringVar()
+
+    def reg():
+        old_art_id = ent1.get()
+        location = ent2.get()
+        lst.append(location)
+        art_id = ent3.get()
+        lst.append(art_id)
+        customer_id = ent4.get()
+        lst.append(customer_id)
+        start_date = ent5.get()
+        lst.append(start_date)
+        end_date = ent6.get()
+        lst.append(end_date)
+        lst.append(old_art_id)
+        sql1 = "UPDATE EXHIBITION SET LOCATION=%s, ART_ID=%s,CUSTOMER_ID=%s, START_DATE=%s,END_DATE=%s WHERE  ART_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("UPDATION", "Updated the record in EXHIBITION successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+        var6.set("")
+
+    lab1 = tkinter.Label(window1, text="OLD_ART_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250,
+                                                                                        pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, pady=10)
+
+    lab2 = tkinter.Label(window1, text="LOCATION", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                        pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+    lab3 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250,
+                                                                                      pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+    lab4 = tkinter.Label(window1, text="CUSTOMER_ID", font=("arial bold", 20)).grid(row=5, column=6, padx=250,
+                                                                                       pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    lab5 = tkinter.Label(window1, text="START_DATE", font=("arial bold", 20)).grid(row=6, column=6, padx=250,
+                                                                                       pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, pady=10)
+
+    lab6 = tkinter.Label(window1, text="END_DATE", font=("arial bold", 20)).grid(row=7, column=6, padx=250,
+                                                                                   pady=10)
+    ent6 = tkinter.Entry(window1, textvariable=var6)
+    ent6.grid(row=7, column=7, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=9, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=9, column=7,
+
+                                                                                                     pady=10)
+
+
+def update_online():
+    window1 = tkinter.Tk()
+    window1.title("ONLINE")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var1 = tkinter.StringVar()
+    var2 = tkinter.StringVar()
+    var3 = tkinter.StringVar()
+    var4 = tkinter.StringVar()
+    var5 = tkinter.StringVar()
+
+    def reg():
+        old_order_id = ent1.get()
+        order_id = ent2.get()
+        lst.append(order_id)
+        customer_id = ent3.get()
+        lst.append(customer_id)
+        art_id = ent4.get()
+        lst.append(art_id)
+        order_date = ent5.get()
+        lst.append(order_date)
+        lst.append(old_order_id)
+        sql1 = "UPDATE ONLINE SET ORDER_ID=%s, CUSTOMER_ID=%s,ART_ID=%s, ORDER_DATE=%s WHERE  ORDER_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("UPDATION", "Updated the record in ONLINE successfully")
+
+        var1.set("")
+        var2.set("")
+        var3.set("")
+        var4.set("")
+        var5.set("")
+
+    lab1 = tkinter.Label(window1, text="OLD_ORDER_ID", font=("arial bold", 20)).grid(row=2, column=6, padx=250,
+                                                                                        pady=10)
+    ent1 = tkinter.Entry(window1, textvariable=var1)
+    ent1.grid(row=2, column=7, pady=10)
+
+    lab2 = tkinter.Label(window1, text="NEW_ORDER_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                        pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+    lab3 = tkinter.Label(window1, text="CUSTOMER_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250,
+                                                                                      pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+    lab4 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=5, column=6, padx=250,
+                                                                                       pady=10)
+    ent4 = tkinter.Entry(window1, textvariable=var4)
+    ent4.grid(row=5, column=7, pady=10)
+
+    lab5 = tkinter.Label(window1, text="ORDER_DATE", font=("arial bold", 20)).grid(row=6, column=6, padx=250,
+                                                                                       pady=10)
+    ent5 = tkinter.Entry(window1, textvariable=var5)
+    ent5.grid(row=6, column=7, pady=10)
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+def update():
+    window1 = tkinter.Toplevel(window)
+    window1.title("UPDATE")
+    window1.geometry('500x200')
+    window1.configure(bg="deeppink4")
+    la = tkinter.Label(window1, text="UPDATE", font=("ARIAL BOLD", 50), fg="snow", bg="deeppink4").grid(row=0,
+                                                                                                           column=15,
+                                                                                                           padx=600)
+    b1 = tkinter.Button(window1, text="ART", font=("Arial bold", 30), bg="black", fg="snow"
+                        , command=update_art).grid(row=5, column=15, padx=600, pady=25)
+    b2 = tkinter.Button(window1, text="ARTIST", font=("Arial bold", 30), bg="black", fg="snow",
+                       command=update_artist).grid(row=10, column=15, padx=600, pady=25)
+    b3 = tkinter.Button(window1, text="CUSTOMER", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=update_customer).grid(row=15, column=15, padx=600, pady=25)
+    b4 = tkinter.Button(window1, text="EXHIBITION", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=update_exhibition).grid(row=20, column=15, padx=600, pady=25)
+    b5 = tkinter.Button(window1, text="ONLINE", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=update_online).grid(row=25, column=15, padx=600, pady=25)
+    b6 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), bg="snow", fg="black",
+                        command=window1.destroy).grid(row=26, column=15,
+
+                                                   padx=600,pady=25)
+
+def dele_art():
+    window1 = tkinter.Tk()
+    window1.title("ART")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var2 = tkinter.StringVar()
+
+
+    def reg():
+        art_id = ent2.get()
+        lst.append(art_id)
+        sql1 = "DELETE FROM  ART  WHERE ART_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("DELETION", "Deleted the record in ART successfully")
+
+        var2.set("")
+
+    lab2 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250, pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+def dele_artist():
+    window1 = tkinter.Tk()
+    window1.title("ARTIST")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var2 = tkinter.StringVar()
+
+
+    def reg():
+        artist_id = ent2.get()
+        lst.append(artist_id)
+
+        sql1 = "DELETE FROM ARTIST WHERE  ARTIST_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("DELETION", "Deleted the record in ARTIST successfully")
+
+        var2.set("")
+
+
+
+
+    lab2 = tkinter.Label(window1, text="NEW_ARTIST_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                      pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=10, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=10, column=7,
+
+                                                                                                     pady=10)
+
+
+def dele_customer():
+    window1 = tkinter.Tk()
+    window1.title("CUSTOMER")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var2 = tkinter.StringVar()
+
+
+    def reg():
+
+        customer_id = ent2.get()
+        lst.append(customer_id)
+
+        sql1 = "DELETE FROM CUSTOMER WHERE  CUSTOMER_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("DELETION", "Deleted the record in CUSTOMER successfully")
+
+        var2.set("")
+
+
+
+
+    lab2 = tkinter.Label(window1, text="NEW_CUSTOMER_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                        pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+
+def dele_exhibition():
+    window1 = tkinter.Tk()
+    window1.title("EXHIBITION")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var3 = tkinter.StringVar()
+
+
+    def reg():
+        art_id = ent3.get()
+        lst.append(art_id)
+
+        sql1 = "DELETE FROM  EXHIBITION WHERE  ART_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("DELETION", "Deleted the record in EXHIBITION successfully")
+
+        var3.set("")
+
+
+
+    lab3 = tkinter.Label(window1, text="ART_ID", font=("arial bold", 20)).grid(row=4, column=6, padx=250,
+                                                                               pady=10)
+    ent3 = tkinter.Entry(window1, textvariable=var3)
+    ent3.grid(row=4, column=7, pady=10)
+
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=9, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=9, column=7,
+
+                                                                                                     pady=10)
+
+
+def dele_online():
+    window1 = tkinter.Tk()
+    window1.title("ONLINE")
+    window1.configure(bg="deeppink4")
+    lst = []
+    var2 = tkinter.StringVar()
+
+
+    def reg():
+
+        order_id = ent2.get()
+        lst.append(order_id)
+
+        sql1 = "DELETE FROM  ONLINE WHERE  ORDER_ID=%s"
+        mycursor.execute(sql1, lst)
+        mydb.commit()
+        messagebox.showinfo("DELETION", "Deleted the record in ONLINE successfully")
+
+
+        var2.set("")
+
+
+
+    lab2 = tkinter.Label(window1, text="NEW_ORDER_ID", font=("arial bold", 20)).grid(row=3, column=6, padx=250,
+                                                                                     pady=10)
+    ent2 = tkinter.Entry(window1, textvariable=var2)
+    ent2.grid(row=3, column=7, pady=10)
+
+
+    b1 = tkinter.Button(window1, text="SUBMIT", font=("arial bold", 30), command=reg).grid(row=8, column=6, padx=260,
+                                                                                           pady=10)
+    b2 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), command=window1.destroy).grid(row=8, column=7,
+
+                                                                                                     pady=10)
+
+
+
+
+def dele():
+    window1 = tkinter.Toplevel(window)
+    window1.title("DELETE")
+    window1.geometry('500x200')
+    window1.configure(bg="deeppink4")
+    la = tkinter.Label(window1, text="DELETE", font=("ARIAL BOLD", 50), fg="snow", bg="deeppink4").grid(row=0,
+                                                                                                           column=15,
+                                                                                                           padx=600)
+    b1 = tkinter.Button(window1, text="ART", font=("Arial bold", 30), bg="black", fg="snow"
+                        , command=dele_art).grid(row=5, column=15, padx=600, pady=25)
+    b2 = tkinter.Button(window1, text="ARTIST", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=dele_artist).grid(row=10, column=15, padx=600, pady=25)
+    b3 = tkinter.Button(window1, text="CUSTOMER", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=dele_customer).grid(row=15, column=15, padx=600, pady=25)
+    b4 = tkinter.Button(window1, text="EXHIBITION", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=dele_exhibition).grid(row=20, column=15, padx=600, pady=25)
+    b5 = tkinter.Button(window1, text="ONLINE", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=dele_online).grid(row=25, column=15, padx=600, pady=25)
+    b6 = tkinter.Button(window1, text="BACK", font=("arial bold", 30), bg="snow", fg="black",
+                        command=window1.destroy).grid(row=26, column=15,
+                                                      padx=600,
+                                                      pady=25)
+
+
+
+
+
+def new_entry():
+    window1=tkinter.Toplevel(window)
+    window1.title("New Entry")
+    window1.geometry('500x200')
+    window1.configure(bg="deeppink4")
+    la = tkinter.Label(window1, text="NEW ENTRY", font=("ARIAL BOLD", 50), fg="snow", bg="deeppink4").grid(row=0,column=15,padx=600)
+    b1 = tkinter.Button(window1, text="ART", font=("Arial bold", 30), bg="black", fg="snow"
+                        , command=input_art).grid(row=5,column=15,padx=600,pady=25)
+    b2 = tkinter.Button(window1, text="ARTIST", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=input_artist).grid(row=10,column=15,padx=600,pady=25)
+    b3 = tkinter.Button(window1, text="CUSTOMER", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=input_customer).grid(row=15,column=15,padx=600,pady=25)
+    b4 = tkinter.Button(window1, text="EXHIBITION", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=input_exhibition).grid(row=20,column=15,padx=600,pady=25)
+    b5 = tkinter.Button(window1, text="ONLINE", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=input_online).grid(row=25,column=15,padx=600,pady=25)
+    b6 = tkinter.Button(window1, text="BACK", font=("arial bold", 30),bg="snow", fg="black", command=window1.destroy).grid(row=26, column=15,
+                                                                                                     padx=600,
+                                                                                                     pady=25)
+
+
+def view():
+    window1=tkinter.Toplevel(window)
+    window1.title("VIEW")
+    window1.geometry('500x200')
+    window1.configure(bg="deeppink4")
+    la=tkinter.Label(window1,text="VIEW",font=("ARIAL BOLD",50),fg="snow",bg="deeppink4").grid(row=0,column=20,padx=600)
+    b1 = tkinter.Button(window1, text="ART", font=("Arial bold", 30), bg="black", fg="snow"
+                        , command=view_art).grid(row=5,column=20,padx=600,pady=25)
+    b2 = tkinter.Button(window1, text="ARTIST", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=view_artist).grid(row=10,column=20,padx=600,pady=25)
+    b3 = tkinter.Button(window1, text="CUSTOMER", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=view_customer).grid(row=15,column=20,padx=600,pady=25)
+    b4 = tkinter.Button(window1, text="EXHIBITION", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=view_exhibition).grid(row=20,column=20,padx=600,pady=25)
+    b5 = tkinter.Button(window1, text="ONLINE", font=("Arial bold", 30), bg="black", fg="snow",
+                        command=view_online).grid(row=25,column=20,padx=600,pady=25)
+    b6 = tkinter.Button(window1, text="BACK", font=("arial bold", 30),bg="snow", fg="black",command=window1.destroy).grid(row=26, column=20,
+                                                                                                     padx=600,
+                                                                                                     pady=25)
+
+
+bt1=tkinter.Button(window,text="NEW ENTRY",font=("Arial bold",30),fg="snow",bg="black",
+                   command=new_entry).grid(row=5,column=4,padx=350,pady=25)
+bt2=tkinter.Button(window,text="VIEW",font=("Arial bold",30),fg="snow",bg="black",
+                   command=view).grid(row=10,column=4,padx=350,pady=25)
+bt3=tkinter.Button(window,text="UPDATE",font=("Arial bold",30),fg="snow",bg="black",
+                   command=update).grid(row=15,column=4,padx=350,pady=25)
+bt4=tkinter.Button(window,text="DELETE",font=("Arial Bold",30),fg="snow",bg="black",
+                   command=dele).grid(row=20,column=4,padx=350,pady=25)
+
+b6 = tkinter.Button(window, text="BACK", font=("arial bold", 30),bg="snow", fg="black", command=window.destroy).grid(row=26, column=4,
+                                                                                                     padx=350,
+                                                                                                     pady=25)
+
+window.mainloop()
